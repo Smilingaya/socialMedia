@@ -25,14 +25,17 @@ app.get('/api/status',(req,res)=>{
 })
 //add a new post
 app.post('/api/status/add', async (req, res) => {
-    const id = Math.floor(Math.random() * 100000);
-    const { text ,img} = req.body;
-   
-    data.status.push({ id, text,img });
-    await fs.writeFileSync(path.resolve(__dirname, 'db.json' ), JSON.stringify(data));
-
-    return res.status(200).json({ data: data.status});
-});
+    const { text, img } = req.body;
+    const newStatus = {
+      id: Math.floor(Math.random() * 100000),
+      text,
+      img,
+    };
+  
+    data.status.push(newStatus);
+    await fs.writeFileSync(path.resolve(__dirname, 'db.json'), JSON.stringify(data));
+    return res.status(200).json({ data: data.status });
+  });
 //delet post
 
 app.delete('/api/status/delete/:id',(req,res)=>{
